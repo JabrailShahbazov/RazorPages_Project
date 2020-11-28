@@ -18,11 +18,15 @@ namespace RazorPages_Project.Pages.Employees
             _employeeRepository = employeeRepository;
         }
 
+        //[BindProperty(SupportsGet = true)]
+        //public int Id { get; set; }
         public Employee Employee { get; private set; }
 
         public void OnGet(int id)
         {
+            //Id = id;
             Employee = _employeeRepository.GetEmployee(id);
         }
+
     }
 }
