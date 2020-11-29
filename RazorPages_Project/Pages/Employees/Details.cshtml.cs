@@ -20,6 +20,7 @@ namespace RazorPages_Project.Pages.Employees
 
         //[BindProperty(SupportsGet = true)]
         //public int Id { get; set; }
+
         public Employee Employee { get; private set; }
 
         [TempData]

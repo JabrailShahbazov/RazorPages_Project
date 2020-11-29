@@ -23,6 +23,7 @@ namespace RazorPages_Project.Pages.Employees
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [BindProperty]
         public Employee Employee { get; set; }
 
         [BindProperty]
@@ -45,26 +46,31 @@ namespace RazorPages_Project.Pages.Employees
             return Page();
         }
 
-        public IActionResult OnPost(Employee employee)
+        public IActionResult OnPost()
         {
-
-            if (Photo != null)
+            if (ModelState.IsValid)
             {
-                // If a new photo is uploaded, the existing photo must be
-                // deleted. So check if there is an existing photo and delete
-                if (employee.PhotoPath != null)
+                
+                if (Photo != null)
                 {
-                    string filePath = Path.Combine(_webHostEnvironment.WebRootPath,
-                        "images", employee.PhotoPath);
-                    System.IO.File.Delete(filePath);
+                    // If a new photo is uploaded, the existing photo must be
+                    // deleted. So check if there is an existing photo and delete
+                    if (Employee.PhotoPath != null)
+                    {
+                        string filePath = Path.Combine(_webHostEnvironment.WebRootPath,
+                            "images", Employee.PhotoPath);
+                        System.IO.File.Delete(filePath);
+                    }
+                    // Save the new photo in wwwroot/images folder and update
+                    // PhotoPath property of the employee object
+                    Employee.PhotoPath = ProcessUploadedFile();
                 }
-                // Save the new photo in wwwroot/images folder and update
-                // PhotoPath property of the employee object
-                employee.PhotoPath = ProcessUploadedFile();
+
+                Employee = _employeeRepository.Update(Employee);
+                return RedirectToPage("Index");
             }
 
-            Employee = _employeeRepository.Update(employee);
-            return RedirectToPage("Index");
+            return Page();
         }
 
 
