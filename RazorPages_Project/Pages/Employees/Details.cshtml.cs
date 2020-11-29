@@ -22,6 +22,8 @@ namespace RazorPages_Project.Pages.Employees
         //public int Id { get; set; }
         public Employee Employee { get; private set; }
 
+        [TempData]
+        public string Message { get; set; }
         public IActionResult OnGet(int id)
         {
             //Id = id;
