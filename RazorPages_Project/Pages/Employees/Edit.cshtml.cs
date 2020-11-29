@@ -35,9 +35,16 @@ namespace RazorPages_Project.Pages.Employees
         public string Message { get; set; }
 
 
-        public IActionResult OnGet(int id)
-        {
-            Employee = _employeeRepository.GetEmployee(id);
+        public IActionResult OnGet(int? id)
+        {     if (id.HasValue)
+            {
+                Employee = _employeeRepository.GetEmployee(id.Value);
+            }
+            else
+            {
+                Employee = new Employee();
+            }
+
             if (Employee == null)
             {
                 return RedirectToPage("/NotFound");
@@ -66,7 +73,14 @@ namespace RazorPages_Project.Pages.Employees
                     Employee.PhotoPath = ProcessUploadedFile();
                 }
 
-                Employee = _employeeRepository.Update(Employee);
+                if (Employee.Id >0)
+                {
+                    Employee = _employeeRepository.Update(Employee);
+                }
+                else
+                {
+                    Employee = _employeeRepository.Add(Employee);
+                }
                 return RedirectToPage("Index");
             }
 
