@@ -60,5 +60,16 @@ namespace RazorPages.Services
             _employeeList.Add(newEmployee);
             return newEmployee;
         }
+
+        public Employee DeleteToEmployee(int id)
+        {
+            Employee deleteEmployee = _employeeList.FirstOrDefault(x => x.Id == id);
+            if (deleteEmployee != null)
+            {
+                _employeeList.Remove(deleteEmployee);
+            }
+
+            return deleteEmployee;
+        }
     }
 }
