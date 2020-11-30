@@ -7,6 +7,8 @@ namespace RazorPages.Models
         None,
         HR,
         IT,
-        Payroll
+        Payroll,
+        Value,
+     
     }
 }
