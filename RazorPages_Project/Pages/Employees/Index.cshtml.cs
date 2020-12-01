@@ -12,16 +12,19 @@ namespace RazorPages_Project.Pages.Employees
     public class IndexModel : PageModel
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public IEnumerable<Employee> Employees { get; set; }
         public IndexModel(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
+        public IEnumerable<Employee> Employees { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } 
 
         //GET: Employees/Index
         public void OnGet()
         {
-            Employees = _employeeRepository.GetAllEmployees();
+            Employees = _employeeRepository.Search(SearchTerm);
         }
     }
 }
