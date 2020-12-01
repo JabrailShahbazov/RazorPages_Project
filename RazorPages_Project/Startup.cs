@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using RazorPages.Services;
+using RazorPages.Services.Data;
 
 namespace RazorPages_Project
 {
@@ -25,6 +27,11 @@ namespace RazorPages_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("EmployeeDBConnection"));
+                });
+
             services.AddRazorPages();
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
 
