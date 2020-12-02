@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using RazorPages.Services;
 using RazorPages.Services.Data;
+using RazorPages.Services.Persistance;
 
 namespace RazorPages_Project
 {
@@ -33,7 +34,7 @@ namespace RazorPages_Project
                 });
 
             services.AddRazorPages();
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             services.Configure<RouteOptions>(options =>
             {
